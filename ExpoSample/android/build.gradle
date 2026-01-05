@@ -1,75 +1,36 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        buildToolsVersion = findProperty('android.buildToolsVersion') ?: '35.0.0'
-        minSdkVersion = Integer.parseInt(findProperty('android.minSdkVersion') ?: '24')
-        compileSdkVersion = Integer.parseInt(findProperty('android.compileSdkVersion') ?: '35')
-        targetSdkVersion = Integer.parseInt(findProperty('android.targetSdkVersion') ?: '34')
-        kotlinVersion = findProperty('android.kotlinVersion') ?: '1.9.24'
-
-        ndkVersion = "26.1.10909125"
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath('com.android.tools.build:gradle')
-        classpath('com.facebook.react:react-native-gradle-plugin')
-        classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
+  dependencies {
+    classpath('com.android.tools.build:gradle')
+    classpath('com.facebook.react:react-native-gradle-plugin')
+    classpath('org.jetbrains.kotlin:kotlin-gradle-plugin')
+  }
 }
-
-apply plugin: "com.facebook.react.rootproject"
 
 allprojects {
-    repositories {
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url(new File(['node', '--print', "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), '../android'))
-        }
-        maven {
-            // Android JSC is installed from npm
-            url(new File(['node', '--print', "require.resolve('jsc-android/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim(), '../dist'))
-        }
+  repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://www.jitpack.io' }
 
-        google()
-        mavenCentral()
-        maven { url 'https://www.jitpack.io' }
-        // ADwhale Mediation SDK Repository Public Access Info
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/dev-adwhale/AdWhaleAndroid/SDK")
-            credentials {
-                username = githubAdWhalePackagesUsername // SDK 부록페이지의 username 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-                password = githubAdWhalePackagesPassword // SDK 부록페이지의 password 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-            }
-        }
+    // AdWhale SDK Repository
+    maven { url "https://dev-adwhale.github.io/adwhale-sdk-android-maven/maven-repo" }
 
-        // Cauly SDK Repository Public Access Info
-        maven {
-            url "s3://repo.cauly.net/releases"
-            credentials(AwsCredentials) {
-                username = githubCaulyPackagesUsername // SDK 부록페이지의 username 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-                password = githubCaulyPackagesPassword // SDK 부록페이지의 password 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-            }
-        }
+    // Cauly SDK Repository
+    maven { url "https://cauly.github.io/cauly-sdk-android-maven/maven-repo" }
 
-        // Admize SDK Repository Public Access Info
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/cauly/admize-sdk-android/SDK")
-            credentials {
-                username = githubAdmizePackagesUsername // SDK 부록페이지의 username 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-                password = githubAdmizePackagesPassword // SDK 부록페이지의 password 입력(https://adwhale.gitbook.io/sdk-android-appendix 참고)
-            }
-        }
+    // Admize SDK Repository
+    maven { url "https://cauly.github.io/admize-sdk-android-maven/maven-repo" }
 
-        // AdFit SDK Repository Public Access Info
-        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
-
-        // Bidmad SDK Repository Public Access Info
-        maven { url "https://bidmad-sdk.s3.amazonaws.com/" }
-    }
+    // AdFit SDK Repository (Kakao)
+    maven { url "https://devrepo.kakao.com/nexus/content/groups/public/" }
+  }
 }
+
+apply plugin: "expo-root-project"
+apply plugin: "com.facebook.react.rootproject"

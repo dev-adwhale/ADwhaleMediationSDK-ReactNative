@@ -1,11 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- ADwhale Mediation SDK 퍼미션 권한 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
-    <!-- ADwhale Mediation SDK 퍼미션 권한 -->
 
     <application
       android:name=".MainApplication"
@@ -14,7 +9,7 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme"
-      android:usesCleartextTraffic="true"
+      android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
       <activity
         android:name=".MainActivity"
@@ -28,15 +23,11 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-
-      <!-- ADwhale Mediation SDK 키들 -->
       <meta-data
           android:name="net.adwhale.sdk.mediation.PUBLISHER_UID"
           android:value="발급받은 PUBLISHER_UID 값" />
       <meta-data
           android:name="com.google.android.gms.ads.APPLICATION_ID"
-          android:value="Admob에서 발급받은 APP ID 값" />
-      <!-- ADwhale Mediation SDK 키들 -->
-
+          android:value="애드웨일이 제공한 Admob APP ID값" />
     </application>
 </manifest>

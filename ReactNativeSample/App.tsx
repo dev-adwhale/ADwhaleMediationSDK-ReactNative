@@ -1,117 +1,109 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+// example/src/AdWhaleSampleApp.tsx
+import React, {useState} from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TouchableOpacity,
   View,
 } from 'react-native';
+import AdWhaleBannerSampleScreen from './AdWhaleBannerSampleScreen';
+import AdWhaleInterstitialSampleScreen from './AdWhaleInterstitialSampleScreen';
+import AdWhaleRewardSampleScreen from './AdWhaleRewardSampleScreen';
+import AdWhaleNativeSampleScreen from './AdWhaleNativeSampleScreen';
+import AdWhaleAppOpenSampleScreen from './AdWhaleAppOpenSampleScreen';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+type ScreenType = 'menu' | 'banner' | 'interstitial' | 'reward' | 'native' | 'appopen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+const App: React.FC = () => {
+  const [currentScreen, setCurrentScreen] = useState<ScreenType>('menu');
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
+  const showMenu = () => setCurrentScreen('menu');
+
+  const renderMenu = () => (
+    <ScrollView style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      <Text style={styles.header}>
+        AdWhale Mediation Ad{'\n'}React-Native Sample (TypeScript)
       </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setCurrentScreen('banner')}>
+          <Text style={styles.buttonText}>Banner Ad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setCurrentScreen('interstitial')}>
+          <Text style={styles.buttonText}>Interstitial Ad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setCurrentScreen('reward')}>
+          <Text style={styles.buttonText}>Reward Ad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setCurrentScreen('native')}>
+          <Text style={styles.buttonText}>Native Ad</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setCurrentScreen('appopen')}>
+          <Text style={styles.buttonText}>App Open Ad</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
-}
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case 'banner':
+        return <AdWhaleBannerSampleScreen onBack={showMenu} />;
+      case 'interstitial':
+        return <AdWhaleInterstitialSampleScreen onBack={showMenu} />;
+      case 'reward':
+        return <AdWhaleRewardSampleScreen onBack={showMenu} />;
+      case 'native':
+        return <AdWhaleNativeSampleScreen onBack={showMenu} />;
+      case 'appopen':
+        return <AdWhaleAppOpenSampleScreen onBack={showMenu} />;
+      case 'menu':
+      default:
+        return renderMenu();
+    }
   };
 
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
+  return renderScreen();
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
   },
-  sectionTitle: {
+  header: {
     fontSize: 24,
+    textAlign: 'center',
+    margin: 30,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    margin: 20,
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 15,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
     fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 
