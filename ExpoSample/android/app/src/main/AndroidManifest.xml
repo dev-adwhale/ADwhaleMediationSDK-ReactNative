@@ -30,7 +30,6 @@
     <meta-data
         android:name="net.adwhale.sdk.mediation.PUBLISHER_UID"
         android:value="발급받은 PUBLISHER_UID 값" />
-
     <meta-data
         android:name="com.google.android.gms.ads.APPLICATION_ID"
         android:value="애드웨일이 제공한 Admob APP ID값" />

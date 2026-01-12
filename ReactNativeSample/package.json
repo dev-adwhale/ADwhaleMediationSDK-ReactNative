@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.83.1",
-    "adwhale-sdk-react-native": "^2.7.102",
+    "adwhale-sdk-react-native": "^2.7.202",
     "react": "19.2.0",
     "react-native": "0.83.1",
     "react-native-safe-area-context": "^5.5.2"
