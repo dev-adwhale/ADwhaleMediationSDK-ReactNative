@@ -334,3 +334,8 @@ web_modules/
 
 # TernJS
 .tern-port
+
+# package managers
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
