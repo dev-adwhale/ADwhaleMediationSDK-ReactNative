@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {AdWhaleMediationSdk} from 'adwhale-sdk-react-native';
+import {AdWhaleMediationAds} from 'adwhale-sdk-react-native';
 import {
   AdWhaleRewardAd,
   AdWhaleRewardErrorEvent,
@@ -46,7 +46,7 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
   });
 
   useEffect(() => {
-    AdWhaleMediationSdk.initialize()
+    AdWhaleMediationAds.initialize()
       .then(code => {
         if (code === 100) {
           setState(prev => ({...prev, debugInfo: 'SDK 초기화 성공\n'}));
@@ -139,14 +139,14 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
 
   const handleSetCoppa = (value: boolean) => {
     setState(prev => ({...prev, coppaEnabled: value}));
-    AdWhaleMediationSdk.setCoppa(value);
+    AdWhaleMediationAds.setCoppa(value);
   };
 
   const handleRequestGdpr = async () => {
     console.log('[AdWhaleReward] handleRequestGdpr called');
     try {
       setState(prev => ({...prev, debugInfo: 'GDPR Request 시작...\n'}));
-      const result = await AdWhaleMediationSdk.requestGdprConsent();
+      const result = await AdWhaleMediationAds.requestGdprConsent();
       console.log('[AdWhaleReward] GDPR Request result:', result);
       const msg = `GDPR Consent: ${
         result.isSuccess ? 'Success' : 'Failed'
@@ -165,7 +165,7 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
     console.log('[AdWhaleReward] handleCheckStatus called');
     try {
       setState(prev => ({...prev, debugInfo: 'Status 확인 중...\n'}));
-      const status = await AdWhaleMediationSdk.getConsentStatus();
+      const status = await AdWhaleMediationAds.getConsentStatus();
       console.log('[AdWhaleReward] Status result:', status);
       const msg =
         `COPPA Applied: ${status.coppa}\n` +
@@ -184,7 +184,7 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
   const handleResetGdpr = () => {
     console.log('[AdWhaleReward] handleResetGdpr called');
     try {
-      AdWhaleMediationSdk.resetGdprConsentStatus();
+      AdWhaleMediationAds.resetGdprConsentStatus();
       setState(prev => ({
         ...prev,
         debugInfo: 'GDPR consent status has been reset.',
@@ -201,7 +201,7 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
   const handleSetGdpr = (consent: boolean) => {
     console.log('[AdWhaleReward] handleSetGdpr called:', consent);
     try {
-      AdWhaleMediationSdk.setGdpr(consent);
+      AdWhaleMediationAds.setGdpr(consent);
       setState(prev => ({
         ...prev,
         debugInfo: `Personalized Consent set to: ${consent}`,
@@ -272,7 +272,7 @@ const AdWhaleRewardSampleScreen: React.FC<Props> = ({onBack}) => {
                 value={loggerEnabled}
                 onValueChange={v => {
                   setState(prev => ({...prev, loggerEnabled: v}));
-                  AdWhaleMediationSdk.setLoggerEnabled(v);
+                  AdWhaleMediationAds.setLoggerEnabled(v);
                 }}
               />
             </View>

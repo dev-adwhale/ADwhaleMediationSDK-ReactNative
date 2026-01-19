@@ -18,8 +18,8 @@ import {
   View,
 } from 'react-native';
 
-import { AdWhaleMediationSdk } from 'adwhale-sdk-react-native';
-import { AdWhaleBannerView } from 'adwhale-sdk-react-native';
+import { AdWhaleMediationAds } from 'adwhale-sdk-react-native';
+import { AdWhaleAdView } from 'adwhale-sdk-react-native';
 
 /** 배너 사이즈 타입 */
 type BannerSizeKey =
@@ -84,7 +84,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
 
     const init = async () => {
       try {
-        const statusCode = await AdWhaleMediationSdk.initialize();
+        const statusCode = await AdWhaleMediationAds.initialize();
         if (!mounted) return;
 
         if (statusCode === 100) {
@@ -137,7 +137,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
   const handleSetCoppa = useCallback(
     (value: boolean) => {
       setCoppaEnabled(value);
-      AdWhaleMediationSdk.setCoppa(value);
+      AdWhaleMediationAds.setCoppa(value);
     },
     [],
   );
@@ -146,7 +146,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
     console.log('[AdWhaleBanner] handleRequestGdpr called');
     try {
       setDebugInfo('GDPR Request 시작...\n');
-      const r = await AdWhaleMediationSdk.requestGdprConsent();
+      const r = await AdWhaleMediationAds.requestGdprConsent();
       console.log('[AdWhaleBanner] GDPR Request result:', r);
       setDebugInfo(
         `GDPR Request: ${r.isSuccess ? 'Success' : 'Failed'}\n${r.message}`,
@@ -165,7 +165,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
     console.log('[AdWhaleBanner] handleCheckStatus called');
     try {
       setDebugInfo('Status 확인 중...\n');
-      const status = await AdWhaleMediationSdk.getConsentStatus();
+      const status = await AdWhaleMediationAds.getConsentStatus();
       console.log('[AdWhaleBanner] Status result:', status);
       setDebugInfo(
         `COPPA: ${status.coppa}\nGDPR: ${status.gdpr}\nPersonalized: ${status.personalizedConsent}`,
@@ -181,7 +181,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
   const handleResetGdpr = useCallback(() => {
     console.log('[AdWhaleBanner] handleResetGdpr called');
     try {
-      AdWhaleMediationSdk.resetGdprConsentStatus();
+      AdWhaleMediationAds.resetGdprConsentStatus();
       setDebugInfo('GDPR consent status reset.');
     } catch (error: any) {
       console.error('[AdWhaleBanner] Reset Error:', error);
@@ -192,7 +192,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
   const handleSetGdpr = useCallback((value: boolean) => {
     console.log('[AdWhaleBanner] handleSetGdpr called:', value);
     try {
-      AdWhaleMediationSdk.setGdpr(value);
+      AdWhaleMediationAds.setGdpr(value);
       setDebugInfo(`Set Personalized Consent → ${value}`);
     } catch (error: any) {
       console.error('[AdWhaleBanner] SetGdpr Error:', error);
@@ -345,7 +345,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
                 value={loggerEnabled}
                 onValueChange={v => {
                   setLoggerEnabled(v);
-                  AdWhaleMediationSdk.setLoggerEnabled(v);
+                  AdWhaleMediationAds.setLoggerEnabled(v);
                 }}
               />
             </View>
@@ -517,7 +517,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
                 styles.bannerContainer,
                 { height: bannerHeight + 20 },
               ]}>
-              <AdWhaleBannerView
+              <AdWhaleAdView
                 key={`banner-${bannerPlacementUid}-${bannerAdSize}`}
                 style={[styles.bannerView, { height: bannerHeight }]}
                 placementUid={bannerPlacementUid}

@@ -3,13 +3,15 @@ import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build
 import android.os.Bundle
-
+import com.adwhalesdkreactnative.AdwhaleSdkReactNativePackage
+import com.adwhalesdkreactnative.SimpleBinderFactory
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
 
 import expo.modules.ReactActivityDelegateWrapper
+import com.anonymous.ExpoSample.R
 
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +23,19 @@ class MainActivity : ReactActivity() {
     SplashScreenManager.registerOnActivity(this)
     // @generated end expo-splashscreen
     super.onCreate(null)
+
+      // Register BinderFactory for custom binding native ad (factoryId: app_custom)
+      AdwhaleSdkReactNativePackage.registerBinderFactory(
+          "app_custom",
+          SimpleBinderFactory(
+              R.layout.custom_native_ad_main_layout,  // 레이아웃 리소스 ID
+              R.id.main_view_icon,                     // 아이콘 View ID
+              R.id.main_view_title,                     // 제목 View ID
+              R.id.main_view_body,                      // 본문 View ID
+              R.id.main_button_cta,                     // CTA 버튼 View ID
+              R.id.main_view_media                      // 미디어 View ID
+          )
+      )
   }
 
   /**
