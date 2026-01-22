@@ -20,21 +20,15 @@ import {
 
 import { AdWhaleMediationAds } from 'adwhale-sdk-react-native';
 import { AdWhaleAdView } from 'adwhale-sdk-react-native';
+import { AdWhaleAdSize } from 'adwhale-sdk-react-native';
 
-/** 배너 사이즈 타입 */
-type BannerSizeKey =
-  | 'SIZE_320x50'
-  | 'SIZE_320x100'
-  | 'SIZE_300x250'
-  | 'SIZE_250x250'
-  | 'ADAPTIVE_ANCHOR';
-
-const BANNER_SIZES: Record<BannerSizeKey, string> = {
-  SIZE_320x50: '320x50',
-  SIZE_320x100: '320x100',
-  SIZE_300x250: '300x250',
-  SIZE_250x250: '250x250',
-  ADAPTIVE_ANCHOR: 'ADAPTIVE_ANCHOR',
+/** 배너 사이즈별 정보 (높이, 라벨) */
+const BANNER_SIZE_INFO: Record<AdWhaleAdSize, { height: number; label: string }> = {
+  [AdWhaleAdSize.BANNER_320x50]: { height: 50, label: '320x50' },
+  [AdWhaleAdSize.BANNER_320x100]: { height: 100, label: '320x100' },
+  [AdWhaleAdSize.BANNER_300x250]: { height: 250, label: '300x250' },
+  [AdWhaleAdSize.BANNER_250x250]: { height: 250, label: '250x250' },
+  [AdWhaleAdSize.ADAPTIVE_ANCHOR]: { height: 60, label: 'Adaptive' },
 };
 
 export interface AdWhaleBannerSampleScreenProps {
@@ -50,14 +44,15 @@ export const AdWhaleBannerSampleScreen: React.FC<
   const [loggerEnabled, setLoggerEnabled] = useState(false);
   const [coppaEnabled, setCoppaEnabled] = useState(false);
 
-  const [placementUid, setPlacementUid] = useState('AU1718694072940');
+  const [placementUid, setPlacementUid] = useState('PlacementUid를 입력 하세요.');
   const [placementName, setPlacementName] = useState('');
   const [region, setRegion] = useState('');
   const [gcoder, setGcoder] = useState<{ lt: number; lng: number } | undefined>(
     undefined,
   );
   const [selectedAdSize, setSelectedAdSize] =
-    useState<BannerSizeKey>('SIZE_320x50');
+    useState<AdWhaleAdSize>(AdWhaleAdSize.BANNER_320x50);
+  const [adaptiveAnchorWidth, setAdaptiveAnchorWidth] = useState<number>(0);
 
   const [debugInfo, setDebugInfo] = useState(
     'Please touch [광고 로드] button.',
@@ -74,7 +69,8 @@ export const AdWhaleBannerSampleScreen: React.FC<
     lng: number;
   } | undefined>(undefined);
   const [bannerAdSize, setBannerAdSize] =
-    useState<BannerSizeKey>('SIZE_320x50');
+    useState<AdWhaleAdSize>(AdWhaleAdSize.BANNER_320x50);
+  const [bannerAdaptiveAnchorWidth, setBannerAdaptiveAnchorWidth] = useState<number>(0);
 
   // -----------------------------------------------------
   // SDK 초기화
@@ -84,14 +80,14 @@ export const AdWhaleBannerSampleScreen: React.FC<
 
     const init = async () => {
       try {
-        const statusCode = await AdWhaleMediationAds.initialize();
+        const result = await AdWhaleMediationAds.initialize();
         if (!mounted) return;
 
-        if (statusCode === 100) {
-          setDebugInfo(prev => `SDK 초기화 성공\n${prev}`);
+        if (result.isSuccess) {
+          setDebugInfo(prev => `SDK 초기화 성공: ${result.message}\n${prev}`);
         } else {
           setDebugInfo(
-            prev => `SDK 초기화 실패(status: ${statusCode})\n${prev}`,
+            prev => `SDK 초기화 실패(status: ${result.statusCode}): ${result.message}\n${prev}`,
           );
         }
       } catch (error: any) {
@@ -209,7 +205,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
   }, []);
 
   const handleAdSizeChange = useCallback(
-    (size: BannerSizeKey) => {
+    (size: AdWhaleAdSize) => {
       setSelectedAdSize(size);
       updatePlacementUidBySize();
       setDebugInfo(
@@ -222,25 +218,8 @@ export const AdWhaleBannerSampleScreen: React.FC<
   );
 
   const bannerHeight = useMemo(() => {
-    switch (selectedAdSize) {
-      case 'SIZE_320x50':
-        return 50;
-      case 'SIZE_320x100':
-        return 100;
-      case 'SIZE_300x250':
-      case 'SIZE_250x250':
-        return 250;
-      case 'ADAPTIVE_ANCHOR':
-        return 60;
-      default:
-        return 50;
-    }
+    return BANNER_SIZE_INFO[selectedAdSize]?.height ?? 50;
   }, [selectedAdSize]);
-
-  const getSizeParam = useCallback(
-    (key: BannerSizeKey) => BANNER_SIZES[key],
-    [],
-  );
 
   // -----------------------------------------------------
   // 광고 로드 / 초기화
@@ -248,21 +227,24 @@ export const AdWhaleBannerSampleScreen: React.FC<
   const handleAdLoad = useCallback(() => {
     if (!placementUid) return;
 
-    const sizeStr = getSizeParam(selectedAdSize);
-
     setBannerPlacementUid(placementUid);
     setBannerPlacementName(placementName);
     setBannerRegion(region);
     setBannerGcoder(gcoder);
     setBannerAdSize(selectedAdSize);
+    setBannerAdaptiveAnchorWidth(adaptiveAnchorWidth);
 
     setLoadBannerAd(true);
     setIsBannerAdLoaded(false);
 
+    const adaptiveInfo = selectedAdSize === AdWhaleAdSize.ADAPTIVE_ANCHOR
+      ? `\nadaptiveAnchorWidth: ${adaptiveAnchorWidth || '0 (전체 너비)'}`
+      : '';
+
     setDebugInfo(
-      `배너 광고 요청!\npid: ${placementUid}\nsize: ${sizeStr}\nplacementName: ${placementName || 'N/A'}\nregion: ${region || 'N/A'}\n`,
+      `배너 광고 요청!\npid: ${placementUid}\nsize: ${selectedAdSize}\nplacementName: ${placementName || 'N/A'}\nregion: ${region || 'N/A'}${adaptiveInfo}\n`,
     );
-  }, [placementUid, placementName, region, gcoder, selectedAdSize, getSizeParam]);
+  }, [placementUid, placementName, region, gcoder, selectedAdSize, adaptiveAnchorWidth]);
 
   const handleClearView = useCallback(() => {
     setLoadBannerAd(false);
@@ -271,7 +253,8 @@ export const AdWhaleBannerSampleScreen: React.FC<
     setBannerPlacementName('');
     setBannerRegion('');
     setBannerGcoder(undefined);
-    setBannerAdSize('SIZE_320x50');
+    setBannerAdSize(AdWhaleAdSize.BANNER_320x50);
+    setBannerAdaptiveAnchorWidth(0);
     setDebugInfo('Please touch [광고 로드] button.');
   }, []);
 
@@ -303,12 +286,11 @@ export const AdWhaleBannerSampleScreen: React.FC<
   // UI Helper
   // -----------------------------------------------------
   const renderRadio = (
-    label: string,
-    key: BannerSizeKey,
+    adSize: AdWhaleAdSize,
     selected: boolean,
     onPress: () => void,
   ) => (
-    <TouchableOpacity key={key} style={styles.radioRow} onPress={onPress}>
+    <TouchableOpacity key={adSize} style={styles.radioRow} onPress={onPress}>
       <View
         style={[
           styles.radioCircle,
@@ -316,7 +298,7 @@ export const AdWhaleBannerSampleScreen: React.FC<
         ]}>
         {selected && <View style={styles.radioInner} />}
       </View>
-      <Text style={styles.radioLabel}>{label}</Text>
+      <Text style={styles.radioLabel}>{BANNER_SIZE_INFO[adSize].label}</Text>
     </TouchableOpacity>
   );
 
@@ -343,9 +325,16 @@ export const AdWhaleBannerSampleScreen: React.FC<
               <Text style={styles.switchLabel}>Logger</Text>
               <Switch
                 value={loggerEnabled}
-                onValueChange={v => {
+                onValueChange={async v => {
                   setLoggerEnabled(v);
                   AdWhaleMediationAds.setLoggerEnabled(v);
+                  // 테스트: setLoggerEnabled 호출 후 getLogLevel 확인
+                  try {
+                    const logLevel = AdWhaleMediationAds.getLogLevel();
+                    console.log('[AdWhaleBannerSample] getLogLevel() 결과:', logLevel);
+                  } catch (error) {
+                    console.error('[AdWhaleBannerSample] getLogLevel() 실패:', error);
+                  }
                 }}
               />
             </View>
@@ -393,34 +382,52 @@ export const AdWhaleBannerSampleScreen: React.FC<
             <Text style={styles.sectionTitle}>2. 배너 사이즈 선택</Text>
 
             {renderRadio(
-              '320x50',
-              'SIZE_320x50',
-              selectedAdSize === 'SIZE_320x50',
-              () => handleAdSizeChange('SIZE_320x50'),
+              AdWhaleAdSize.BANNER_320x50,
+              selectedAdSize === AdWhaleAdSize.BANNER_320x50,
+              () => handleAdSizeChange(AdWhaleAdSize.BANNER_320x50),
             )}
             {renderRadio(
-              '320x100',
-              'SIZE_320x100',
-              selectedAdSize === 'SIZE_320x100',
-              () => handleAdSizeChange('SIZE_320x100'),
+              AdWhaleAdSize.BANNER_320x100,
+              selectedAdSize === AdWhaleAdSize.BANNER_320x100,
+              () => handleAdSizeChange(AdWhaleAdSize.BANNER_320x100),
             )}
             {renderRadio(
-              '300x250',
-              'SIZE_300x250',
-              selectedAdSize === 'SIZE_300x250',
-              () => handleAdSizeChange('SIZE_300x250'),
+              AdWhaleAdSize.BANNER_300x250,
+              selectedAdSize === AdWhaleAdSize.BANNER_300x250,
+              () => handleAdSizeChange(AdWhaleAdSize.BANNER_300x250),
             )}
             {renderRadio(
-              '250x250',
-              'SIZE_250x250',
-              selectedAdSize === 'SIZE_250x250',
-              () => handleAdSizeChange('SIZE_250x250'),
+              AdWhaleAdSize.BANNER_250x250,
+              selectedAdSize === AdWhaleAdSize.BANNER_250x250,
+              () => handleAdSizeChange(AdWhaleAdSize.BANNER_250x250),
             )}
             {renderRadio(
-              'Adaptive',
-              'ADAPTIVE_ANCHOR',
-              selectedAdSize === 'ADAPTIVE_ANCHOR',
-              () => handleAdSizeChange('ADAPTIVE_ANCHOR'),
+              AdWhaleAdSize.ADAPTIVE_ANCHOR,
+              selectedAdSize === AdWhaleAdSize.ADAPTIVE_ANCHOR,
+              () => handleAdSizeChange(AdWhaleAdSize.ADAPTIVE_ANCHOR),
+            )}
+
+            {/* Adaptive Anchor Width 입력 (ADAPTIVE_ANCHOR 선택 시에만 표시) */}
+            {selectedAdSize === AdWhaleAdSize.ADAPTIVE_ANCHOR && (
+              <View style={styles.adaptiveWidthContainer}>
+                <Text style={styles.adaptiveWidthLabel}>
+                  Adaptive Anchor Width (dp):
+                </Text>
+                <TextInput
+                  style={styles.adaptiveWidthInput}
+                  value={adaptiveAnchorWidth === 0 ? '' : adaptiveAnchorWidth.toString()}
+                  onChangeText={text => {
+                    const width = parseInt(text, 10);
+                    setAdaptiveAnchorWidth(isNaN(width) ? 0 : width);
+                  }}
+                  placeholder="0 (전체 너비)"
+                  placeholderTextColor="#999"
+                  keyboardType="numeric"
+                />
+                <Text style={styles.adaptiveWidthHint}>
+                  0 입력 시 디바이스 전체 가로 길이가 적용됩니다.
+                </Text>
+              </View>
             )}
           </View>
 
@@ -518,13 +525,14 @@ export const AdWhaleBannerSampleScreen: React.FC<
                 { height: bannerHeight + 20 },
               ]}>
               <AdWhaleAdView
-                key={`banner-${bannerPlacementUid}-${bannerAdSize}`}
+                key={`banner-${bannerPlacementUid}-${bannerAdSize}-${bannerAdaptiveAnchorWidth}`}
                 style={[styles.bannerView, { height: bannerHeight }]}
                 placementUid={bannerPlacementUid}
                 placementName={bannerPlacementName || undefined}
                 region={bannerRegion || undefined}
                 gcoder={bannerGcoder}
-                adSize={getSizeParam(bannerAdSize)}
+                adSize={bannerAdSize}
+                adaptiveAnchorWidth={bannerAdaptiveAnchorWidth}
                 loadAd={loadBannerAd}
                 onAdLoaded={onBannerAdLoaded}
                 onAdLoadFailed={onBannerAdLoadFailed}
@@ -633,6 +641,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
   },
   radioLabel: { fontSize: 14, color: '#333' },
+  adaptiveWidthContainer: {
+    marginTop: 12,
+    marginLeft: 28,
+    padding: 12,
+    backgroundColor: '#f0f8ff',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+  },
+  adaptiveWidthLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 6,
+  },
+  adaptiveWidthInput: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 10,
+    borderRadius: 6,
+    fontSize: 13,
+    backgroundColor: 'white',
+  },
+  adaptiveWidthHint: {
+    fontSize: 11,
+    color: '#666',
+    marginTop: 4,
+    fontStyle: 'italic',
+  },
   debugInfo: {
     borderWidth: 1,
     borderColor: '#ddd',

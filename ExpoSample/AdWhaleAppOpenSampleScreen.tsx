@@ -46,11 +46,11 @@ const AdWhaleAppOpenSampleScreen: React.FC<Props> = ({onBack}) => {
 
   useEffect(() => {
     AdWhaleMediationAds.initialize()
-      .then(code => {
-        if (code === 100) {
-          setState(prev => ({...prev, debugInfo: 'SDK 초기화 성공\n'}));
+      .then(result => {
+        if (result.isSuccess) {
+          setState(prev => ({...prev, debugInfo: `SDK 초기화 성공: ${result.message}\n`}));
         } else {
-          setState(prev => ({...prev, debugInfo: 'SDK 초기화 실패\n'}));
+          setState(prev => ({...prev, debugInfo: `SDK 초기화 실패(status: ${result.statusCode}): ${result.message}\n`}));
         }
       })
       .catch(err => {
@@ -272,6 +272,13 @@ const AdWhaleAppOpenSampleScreen: React.FC<Props> = ({onBack}) => {
                 onValueChange={v => {
                   setState(prev => ({...prev, loggerEnabled: v}));
                   AdWhaleMediationAds.setLoggerEnabled(v);
+                  // 테스트: setLoggerEnabled 호출 후 getLogLevel 확인
+                  try {
+                    const logLevel = AdWhaleMediationAds.getLogLevel();
+                    console.log('[AdWhaleAppOpen] getLogLevel() 결과:', logLevel);
+                  } catch (error) {
+                    console.error('[AdWhaleAppOpen] getLogLevel() 실패:', error);
+                  }
                 }}
               />
             </View>
