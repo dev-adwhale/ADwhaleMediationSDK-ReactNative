@@ -1,5 +1,10 @@
 {
   "expo.jsEngine": "hermes",
   "EX_DEV_CLIENT_NETWORK_INSPECTOR": "true",
-  "newArchEnabled": "true"
+  "newArchEnabled": "true",
+  "ios.deploymentTarget": "15.1",
+  "ios.useFrameworks": "static",
+  "ios.forceStaticLinking": "[]",
+  "apple.extraPods": "[{\"name\":\"GoogleMobileAdsMediationUnity\",\"version\":\"4.16.6.1\"},{\"name\":\"GoogleMobileAdsMediationMoloco\",\"version\":\"4.4.1.0\"},{\"name\":\"GoogleMobileAdsMediationAppLovin\",\"version\":\"13.5.1.0\"},{\"name\":\"GoogleMobileAdsMediationInMobi\",\"version\":\"11.1.1.1\"},{\"name\":\"GoogleMobileAdsMediationVungle\",\"version\":\"7.7.0.0\"},{\"name\":\"GoogleMobileAdsMediationFyber\",\"version\":\"8.4.4.1\"},{\"name\":\"GoogleMobileAdsMediationMintegral\",\"version\":\"8.0.7.0\"},{\"name\":\"GoogleMobileAdsMediationPangle\",\"version\":\"7.9.0.6.0\"},{\"name\":\"GoogleMobileAdsMediationIronSource\",\"version\":\"9.3.0.0.1\"}]",
+  "apple.privacyManifestAggregationEnabled": "true"
 }

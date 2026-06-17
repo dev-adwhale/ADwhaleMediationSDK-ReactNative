@@ -1,8 +1,8 @@
 package com.reactnativesample
 
 import android.os.Bundle
+import com.adwhalesdkreactnative.AdWhaleCustomNativeBinderFactory
 import com.adwhalesdkreactnative.AdwhaleSdkReactNativePackage
-import com.adwhalesdkreactnative.SimpleBinderFactory
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
@@ -29,7 +29,7 @@ class MainActivity : ReactActivity() {
         // Register BinderFactory for custom binding native ad (factoryId: app_custom)
         AdwhaleSdkReactNativePackage.registerBinderFactory(
             "app_custom",
-            SimpleBinderFactory(
+            AdWhaleCustomNativeBinderFactory(
                 R.layout.custom_native_ad_main_layout,  // 레이아웃 리소스 ID
                 R.id.main_view_icon,                     // 아이콘 View ID
                 R.id.main_view_title,                     // 제목 View ID

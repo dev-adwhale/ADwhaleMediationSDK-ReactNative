@@ -1,4 +1,5 @@
 import Expo
+import AdwhaleSdkReactNative
 import React
 import ReactAppDependencyProvider
 
@@ -28,6 +29,15 @@ public class AppDelegate: ExpoAppDelegate {
       in: window,
       launchOptions: launchOptions)
 #endif
+
+    // Register custom native ad view factory (factoryId: app_custom)
+    AdWhaleNativeCustomViewFactoryRegistry.registerNativeAdViewFactory(
+      "app_custom",
+      factory: AdWhaleBlockNativeAdViewFactory { frame in
+        ExampleCustomNativeAdView(frame: frame)
+      }
+    )
+
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

@@ -1,3 +1,6 @@
+source 'https://cdn.cocoapods.org/'
+source 'https://github.com/dev-adwhale/AdWhaleSDK_iOS.git'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -8,13 +11,10 @@ require Pod::Executable.execute_command('node', ['-p',
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
-linkage = ENV['USE_FRAMEWORKS']
-if linkage != nil
-  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
-  use_frameworks! :linkage => linkage.to_sym
-end
-
 target 'ReactNativeSample' do
+  # AdWhale iOS SDK: Swift / xcframework 기반 Pod 연동 (static frameworks 강제)
+  use_frameworks! :linkage => :static
+
   config = use_native_modules!
 
   use_react_native!(
@@ -23,12 +23,51 @@ target 'ReactNativeSample' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  # AdWhale iOS SDK changelog 기준 파트너 네트워크 버전 고정
+  pod 'GoogleMobileAdsMediationUnity', '4.16.6.1'
+  pod 'GoogleMobileAdsMediationMoloco', '4.4.1.0'
+  pod 'GoogleMobileAdsMediationAppLovin', '13.5.1.0'
+  pod 'GoogleMobileAdsMediationInMobi', '11.1.1.1'
+  pod 'GoogleMobileAdsMediationVungle', '7.7.0.0'
+  pod 'GoogleMobileAdsMediationFyber', '8.4.4.1'
+  pod 'GoogleMobileAdsMediationMintegral', '8.0.7.0'
+  pod 'GoogleMobileAdsMediationPangle', '7.9.0.6.0'
+  pod 'GoogleMobileAdsMediationIronSource', '9.3.0.0.1'
+
   post_install do |installer|
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
       config[:reactNativePath],
       :mac_catalyst_enabled => false,
       # :ccache_enabled => true
     )
+
+    # Xcode15.0 이상에서 TOOLCHAIN_DIR 관련 빌드 에러가 발생하는 경우 대응
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |cfg|
+        xcconfig_path = cfg.base_configuration_reference.real_path
+        xcconfig = File.read(xcconfig_path)
+        xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+        File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
+      end
+    end
+
+    # Mediation 어댑터(InMobi 등) 사용 시 필요: 앱 타겟 Other Linker Flags 에 -ObjC
+    app_project_path = File.join(__dir__, 'ReactNativeSample.xcodeproj')
+    if File.exist?(app_project_path)
+      require 'xcodeproj'
+      project = Xcodeproj::Project.open(app_project_path)
+      project.native_targets.each do |t|
+        next unless t.name == 'ReactNativeSample'
+        t.build_configurations.each do |cfg|
+          flags = cfg.build_settings['OTHER_LDFLAGS'] || ['$(inherited)']
+          flags = [flags] if flags.is_a?(String)
+          cfg.build_settings['OTHER_LDFLAGS'] = (flags + ['-ObjC']).uniq
+        end
+        break
+      end
+      project.save
+    end
   end
 end

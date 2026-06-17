@@ -1,97 +1,190 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# AdWhale SDK React Native (Bare) Sample
 
-# Getting Started
+AdWhale Mediation SDK 를 **Bare React Native (RN CLI)** 환경에서 사용하는 샘플 프로젝트입니다.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Support platforms
+| Platform | Support |
+|----------|---------|
+| Android  | O       |
+| iOS      | O       |
 
-## Step 1: Start Metro
+## Support Features
+| Features         | Support           |
+|------------------|-------------------|
+| SDK initialize   | O                 |
+| Banner           | O                 |
+| Interstitial     | O                 |
+| Rewarded         | O                 |
+| Native Template  | ⚠️(Android only)  |
+| Native Custom    | O                 |
+| App Open         | O                 |
+| App Exit Popup   | ⚠️(Android only)  |
+| Transition Popup | ⚠️(Android only)  |
+| Event Callback   | O                 |
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Version
+샘플에 적용된 React Native SDK 버전은 ```2.7.400``` 입니다.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+| Native SDK    | React Native SDK |
+|---------------|------------------|
+| Android 2.7.4 | 2.7.400          |
+| iOS 1.0.7     | 2.7.400          |
 
-```sh
-# Using npm
-npm start
+- React Native: `0.83.1`
 
-# OR using Yarn
+## 시작하기
+
+### 1. 프로젝트 클론 및 의존성 설치
+
+```bash
+# 1. 프로젝트 클론
+git clone https://github.com/dev-adwhale/ADwhaleMediationSDK-ReactNative.git
+cd ADwhaleMediationSDK-ReactNative/ReactNativeSample
+
+# 2. 의존성 설치
+yarn install        # 또는 npm install
+
+# 3. iOS 의존성 설치 (iOS 빌드 시에만 필요)
+cd ios
+pod install
+cd ..
+```
+
+### 2. 필수 설정
+
+#### Android 설정
+
+`android/app/src/main/AndroidManifest.xml` 의 `<application>` 안에 다음 값을 설정하세요:
+
+```xml
+<!-- AdWhale SDK 설정 -->
+<meta-data
+    android:name="net.adwhale.sdk.mediation.PUBLISHER_UID"
+    android:value="YOUR_PUBLISHER_UID" />
+
+<meta-data
+    android:name="com.google.android.gms.ads.APPLICATION_ID"
+    android:value="YOUR_ANDROID_ADMOB_APP_ID" />
+```
+
+- `YOUR_PUBLISHER_UID`: AdWhale 대시보드에서 발급받은 Publisher UID
+- `YOUR_ANDROID_ADMOB_APP_ID`: Google AdMob 발급 Application ID (예: `ca-app-pub-xxxxxxxxxxxxxxxx~xxxxxxxxxx`)
+
+> AdMob App ID 가 잘못되면 앱 시작 시 `MobileAdsInitProvider ... Invalid application ID` 로 크래시합니다.
+
+미디에이션 어댑터 의존성·maven 저장소·R8 난독화 규칙·Gradle 힙은 다음 파일에 이미 구성되어 있습니다(네트워크 추가 시 수정): `android/build.gradle`, `android/app/build.gradle`, `android/app/proguard-rules.pro`, `android/gradle.properties`.
+
+#### iOS 설정
+
+1. **서명(Development Team) 설정**
+   - `ios/ReactNativeSample.xcworkspace` 를 Xcode 로 엽니다.
+   - **TARGETS → ReactNativeSample → Signing & Capabilities** → **Team** 에서 본인의 Apple Developer 팀을 선택합니다.
+     (팀이 없다면 [Apple Developer Program](https://developer.apple.com/programs/) 가입 필요)
+
+2. **AdMob 앱 ID 설정**
+   - `ios/ReactNativeSample/Info.plist` 의 `GADApplicationIdentifier` 값을 iOS AdMob App ID 로 변경합니다.
+     (예: `ca-app-pub-xxxxxxxxxxxxxxxx~xxxxxxxxxx`)
+
+> iOS 미디에이션 spec source / 미디에이션 pod / `-ObjC` 링커 플래그 / 커스텀 네이티브(`ExampleCustomNativeAdView`)는 `ios/Podfile` 과 `ios/ReactNativeSample/AppDelegate.swift` 에 이미 구성되어 있습니다.
+
+#### Placement UID 설정 — `config.ts`
+
+각 광고 타입별 Placement UID(운영 값)를 설정하세요. iOS 는 GMA Ad Unit ID, Android 는 AdWhale Placement UID 를 사용합니다.
+
+```ts
+export const AdConfig = {
+  // iOS 지면ID (AdUnitId)
+  iosBannerAdUnitId: 'YOUR_IOS_BANNER_AD_UNIT_ID',
+  iosInterstitialAdUnitId: 'YOUR_IOS_INTERSTITIAL_AD_UNIT_ID',
+  iosRewardAdUnitId: 'YOUR_IOS_REWARD_AD_UNIT_ID',
+  iosAppOpenAdUnitId: 'YOUR_IOS_APP_OPEN_AD_UNIT_ID',
+  iosNativeAdUnitId: 'YOUR_IOS_NATIVE_AD_UNIT_ID',
+
+  // Android 지면ID (PlacementUid)
+  banner320x50PlacementUid: 'YOUR_AOS_BANNER_PLACEMENT_UID',
+  banner320x100PlacementUid: 'YOUR_AOS_BANNER_PLACEMENT_UID',
+  banner300x250PlacementUid: 'YOUR_AOS_BANNER_PLACEMENT_UID',
+  banner250x250PlacementUid: 'YOUR_AOS_BANNER_PLACEMENT_UID',
+  interstitialPlacementUid1: 'YOUR_AOS_INTERSTITIAL_PLACEMENT_UID',
+  interstitialPlacementUid2: 'YOUR_AOS_INTERSTITIAL_PLACEMENT_UID',
+  interstitialPlacementUid3: 'YOUR_AOS_INTERSTITIAL_PLACEMENT_UID',
+  rewardPlacementUid1: 'YOUR_AOS_REWARD_PLACEMENT_UID',
+  rewardPlacementUid2: 'YOUR_AOS_REWARD_PLACEMENT_UID',
+  rewardPlacementUid3: 'YOUR_AOS_REWARD_PLACEMENT_UID',
+  nativePlacementUid: 'YOUR_AOS_NATIVE_PLACEMENT_UID',
+  appOpenPlacementUid: 'YOUR_AOS_APP_OPEN_PLACEMENT_UID',
+  exitPopupPlacementUid: 'YOUR_AOS_EXIT_POPUP_PLACEMENT_UID',
+  transitionPopupPlacementUid: 'YOUR_AOS_TRANSITION_POPUP_PLACEMENT_UID',
+} as const;
+```
+
+### 3. 실행
+
+```bash
+# Metro 시작
 yarn start
-```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
+# Android (debug)
 yarn android
-```
+# Android (release)
+npx react-native run-android --mode release
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
+# iOS (debug)
 yarn ios
+# iOS (release)
+npx react-native run-ios --mode Release
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### 4. 환경 점검
+```sh
+npx react-native doctor
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 프로젝트 구조
 
-## Step 3: Modify your app
+- `App.tsx`: 앱 진입점 + SDK 초기화 + **앱 종료 팝업(Android 전용)** 구현(메인 메뉴에서 하드웨어 뒤로가기 가로채기), 메뉴 네비게이션
+- `AdWhaleGuideSampleScreen.tsx`: 배너 / 전면 / 보상형(SSV) / 네이티브(템플릿·커스텀) / 앱 오프닝 통합 테스트
+- `AdWhaleTransitionPopupSampleScreen.tsx`: **앱 전환 팝업(Android 전용)** 광고 구현
+- `config.ts`: 광고 Placement UID 설정(`AdConfig`)
+- `ios/ReactNativeSample/ExampleCustomNativeAdView.swift`: iOS 커스텀 네이티브 광고 뷰 구현(`app_custom`)
+- `android/app/src/main/java/.../MainActivity.kt`: Android 커스텀 네이티브 BinderFactory 등록(`app_custom`)
 
-Now that you have successfully run the app, let's make changes!
+## 요구사항
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- Node.js 18 이상
+- React Native 0.83
+- Android Studio / Xcode (네이티브 빌드용)
+- CocoaPods (iOS)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 참고 문서
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- [AdWhale SDK React Native 가이드](https://adwhale.gitbook.io/adwhale-mediation-sdk/react-native/sdk)
 
-## Congratulations! :tada:
+## 문제 해결
 
-You've successfully run and modified your React Native App. :partying_face:
+### iOS 빌드 오류
+- **Signing requires a development team**: `ios/ReactNativeSample.xcworkspace` → Signing & Capabilities 에서 Team 을 선택하세요.
+- **배너 로드 실패 `Cannot determine request type`**: iOS 배너는 GMA Ad Unit ID(`iosBannerAdUnitId`)가 필요합니다. `config.ts` 의 iOS 값을 확인하세요.
+- **Pod / 빌드 캐시 문제**:
+```bash
+cd ios
+pod deintegrate
+pod install
+cd ..
+yarn start --reset-cache
+```
 
-### Now what?
+### Android 빌드 오류
+- **`Invalid application ID` 크래시**: `AndroidManifest.xml` 의 AdMob `APPLICATION_ID` 가 유효한지 확인하세요.
+- **R8 `OutOfMemoryError`**: `android/gradle.properties` 의 `org.gradle.jvmargs` 힙을 올리세요(기본 6g).
+- **클린 빌드**:
+```bash
+yarn start --reset-cache
+cd android
+./gradlew clean
+cd ..
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## 라이선스
 
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+이 프로젝트는 샘플 프로젝트입니다.

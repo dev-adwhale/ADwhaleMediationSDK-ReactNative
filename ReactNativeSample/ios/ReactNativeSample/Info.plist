@@ -6,6 +6,8 @@
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>GADApplicationIdentifier</key>
+    <string>Google AdMob 에서 발급한 키값</string>
 	<key>CFBundleDisplayName</key>
 	<string>ReactNativeSample</string>
 	<key>CFBundleExecutable</key>

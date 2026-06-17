@@ -17,18 +17,6 @@ allprojects {
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }
-
-    // AdWhale SDK Repository
-    maven { url "https://dev-adwhale.github.io/adwhale-sdk-android-maven/maven-repo" }
-
-    // Cauly SDK Repository
-    maven { url "https://cauly.github.io/cauly-sdk-android-maven/maven-repo" }
-
-    // Admize SDK Repository
-    maven { url "https://cauly.github.io/admize-sdk-android-maven/maven-repo" }
-
-    // AdFit SDK Repository (Kakao)
-    maven { url "https://devrepo.kakao.com/nexus/content/groups/public/" }
   }
 }
 

@@ -34,6 +34,15 @@ allprojects {
         
         // AdFit SDK Repository (Kakao)
         maven { url "https://devrepo.kakao.com/nexus/content/groups/public/" }
+
+        // Mintegral SDK Repository
+        maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
+
+        // Pangle SDK Repository
+        maven { url "https://artifact.bytedance.com/repository/pangle/" }
+
+        // Ironsource SDK Repository
+        maven { url "https://android-sdk.is.com/" }
     }
 }
 
