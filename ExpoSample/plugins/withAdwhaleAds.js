@@ -32,11 +32,11 @@ const {
 
 // AndroidManifest <application> 에 넣을 meta-data
 // (manifest는 prebuild 생성물이라 손으로 넣으면 매 빌드 때 지워짐 → plugin으로 주입)
-const ANDROID_PUBLISHER_UID = 'MD1718693992449';
-const ANDROID_ADMOB_APP_ID = 'ca-app-pub-2626235926542867~4895401558';
+const ANDROID_PUBLISHER_UID = 'Publisher Uid 를 발급받으세요';
+const ANDROID_ADMOB_APP_ID = 'Google AdMob 에서 발급한 키값';
 
 // iOS Info.plist GADApplicationIdentifier (plist도 prebuild 생성물이라 동일하게 plugin으로 주입)
-const IOS_ADMOB_APP_ID = 'ca-app-pub-8713069554470817~7929556981';
+const IOS_ADMOB_APP_ID = 'Google AdMob 에서 발급한 키값';
 const fs = require('fs');
 const path = require('path');
 
