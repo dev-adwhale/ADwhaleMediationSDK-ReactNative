@@ -6,9 +6,9 @@ PODS:
     - Ads-Global/TikTokBusinessSDK
   - Ads-Global/PangleSDK (7.9.0.6)
   - Ads-Global/TikTokBusinessSDK (7.9.0.6)
-  - AdWhaleSDK (1.0.7):
-    - AdWhaleSDK/Base (= 1.0.7)
-  - AdWhaleSDK/Base (1.0.7):
+  - AdWhaleSDK (1.0.8):
+    - AdWhaleSDK/Base (= 1.0.8)
+  - AdWhaleSDK/Base (1.0.8):
     - AdWhaleSDK/Core
     - GoogleMobileAdsMediationFyber (= 8.4.4.1)
     - GoogleMobileAdsMediationInMobi (= 11.1.1.1)
@@ -18,11 +18,11 @@ PODS:
     - GoogleMobileAdsMediationPangle (= 7.9.0.6.0)
     - GoogleMobileAdsMediationUnity (= 4.16.6.1)
     - GoogleMobileAdsMediationVungle (= 7.7.0.0)
-  - AdWhaleSDK/Core (1.0.7):
+  - AdWhaleSDK/Core (1.0.8):
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - GoogleMobileAdsMediationAppLovin (= 13.5.1.0)
-  - AdwhaleSdkReactNative (2.7.400):
-    - AdWhaleSDK (= 1.0.7)
+  - AdwhaleSdkReactNative (2.7.500):
+    - AdWhaleSDK (= 1.0.8)
     - boost
     - DoubleConversion
     - fast_float
@@ -2941,8 +2941,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ads-Global: fb1fa75ebbf100ab9ff216d81b71a05cf1a73675
-  AdWhaleSDK: 5ccde89701685425c181bb2078f016de0da2e390
-  AdwhaleSdkReactNative: 1f699fd642b3174c55446709fbd52775d8e88f47
+  AdWhaleSDK: 78ba542d5772845aab0819b1a9a28c23091b20a1
+  AdwhaleSdkReactNative: 575b63c1ffd8f92161a9302a36cf019f1defa765
   AppLovinSDK: 8d9af6c7617e4d35b38aa8393a3e9d161a74b230
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
@@ -2962,13 +2962,13 @@ SPEC CHECKSUMS:
   GoogleMobileAdsMediationUnity: 48994dc659be3ebc279b5114ad8d5803f1ff4131
   GoogleMobileAdsMediationVungle: 1355cd1303c2b6f14fa5141deeb81e02072c76cb
   GoogleUserMessagingPlatform: befe603da6501006420c206222acd449bba45a9c
-  hermes-engine: 856d318d8318833a0b107b4c5d4f1d6be6c104b5
+  hermes-engine: 70f6a96802c6b46f8061f40a91e66e807604f860
   InMobiSDK: 4642fb34a961980ab94a1ac460c6e16e113498e6
   IronSourceAdQualitySDK: 2a45fd35df68f6c03090e9c330f4efe64e70a9ff
   IronSourceSDK: 5febe9a2c8c4eb4ac743dd0da492d2a6b69b5b7f
   MintegralAdSDK: 9fde3aa7b739121e4e76ae83bcc612a4af27d7e5
   MolocoSDKiOS: b5cf00d43105f04eb600f93d9e39a4e336c738cf
-  RCT-Folly: 59ec0ac1f2f39672a0c6e6cecdd39383b764646f
+  RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: a41bbdd9af30bf2e5715796b313e44ec43eefff1
   RCTRequired: 7be34aabb0b77c3cefe644528df0fa0afad4e4d0
   RCTSwiftUI: a6c7271c39098bf00dbdad8f8ed997a59bbfbe44

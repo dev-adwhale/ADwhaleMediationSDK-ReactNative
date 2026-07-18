@@ -118,19 +118,19 @@ dependencies {
     }
 
     // 옵션 디펜던시(제외가능): Cauly Adapter SDK Repository
-    implementation "net.adwhale.sdk.cauly.adapter:cauly-sdk:3.5.44.0"
+    implementation "net.adwhale.sdk.cauly.adapter:cauly-sdk:3.5.44.1"
 
     // 옵션 디펜던시(제외가능): Admize Adapter SDK Repository
-    implementation "net.adwhale.sdk.admize.adapter:admize-sdk:1.0.8.2"
+    implementation "net.adwhale.sdk.admize.adapter:admize-sdk:1.0.8.3"
 
     // 옵션 디펜던시(제외가능): AdFit Adapter SDK Repository
-    implementation "net.adwhale.sdk.adfit.adapter:adfit-sdk:3.21.17.1"
+    implementation "net.adwhale.sdk.adfit.adapter:adfit-sdk:3.21.17.2"
 
     // 옵션 디펜던시(제외가능): Admob Adapter SDK Repository
-    implementation "net.adwhale.sdk.admob.adapter:admob-sdk:24.3.0.4"
+    implementation "net.adwhale.sdk.admob.adapter:admob-sdk:24.3.0.5"
 
     // 옵션 디펜던시(제외가능): Levelplay Adapter SDK Repository
-    implementation "net.adwhale.sdk.levelplay.adapter:levelplay-sdk:8.12.0.1"
+    implementation "net.adwhale.sdk.levelplay.adapter:levelplay-sdk:8.12.0.2"
 
     // Admob Mediation network adapters
     implementation 'com.google.ads.mediation:applovin:13.3.1.1' // Admob-AppLovin SDK dependency

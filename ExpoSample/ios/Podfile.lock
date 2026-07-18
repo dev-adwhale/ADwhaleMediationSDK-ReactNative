@@ -6,9 +6,9 @@ PODS:
     - Ads-Global/TikTokBusinessSDK
   - Ads-Global/PangleSDK (7.9.0.6)
   - Ads-Global/TikTokBusinessSDK (7.9.0.6)
-  - AdWhaleSDK (1.0.7):
-    - AdWhaleSDK/Base (= 1.0.7)
-  - AdWhaleSDK/Base (1.0.7):
+  - AdWhaleSDK (1.0.8):
+    - AdWhaleSDK/Base (= 1.0.8)
+  - AdWhaleSDK/Base (1.0.8):
     - AdWhaleSDK/Core
     - GoogleMobileAdsMediationFyber (= 8.4.4.1)
     - GoogleMobileAdsMediationInMobi (= 11.1.1.1)
@@ -18,11 +18,11 @@ PODS:
     - GoogleMobileAdsMediationPangle (= 7.9.0.6.0)
     - GoogleMobileAdsMediationUnity (= 4.16.6.1)
     - GoogleMobileAdsMediationVungle (= 7.7.0.0)
-  - AdWhaleSDK/Core (1.0.7):
+  - AdWhaleSDK/Core (1.0.8):
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - GoogleMobileAdsMediationAppLovin (= 13.5.1.0)
-  - AdwhaleSdkReactNative (2.7.400):
-    - AdWhaleSDK (= 1.0.7)
+  - AdwhaleSdkReactNative (2.7.500):
+    - AdWhaleSDK (= 1.0.8)
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - hermes-engine
     - RCTRequired
@@ -48,7 +48,7 @@ PODS:
   - AppLovinSDK (13.5.1)
   - EXConstants (18.0.13):
     - ExpoModulesCore
-  - Expo (54.0.35):
+  - Expo (54.0.36):
     - ExpoModulesCore
     - hermes-engine
     - RCTRequired
@@ -2454,11 +2454,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Ads-Global: fb1fa75ebbf100ab9ff216d81b71a05cf1a73675
-  AdWhaleSDK: 5ccde89701685425c181bb2078f016de0da2e390
-  AdwhaleSdkReactNative: da2a60e0a93a90e40a82847438ac20f64218bf06
+  AdWhaleSDK: 78ba542d5772845aab0819b1a9a28c23091b20a1
+  AdwhaleSdkReactNative: 9d63621dfef56f6ecfaa6823c7fd374fbaf26103
   AppLovinSDK: 8d9af6c7617e4d35b38aa8393a3e9d161a74b230
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
-  Expo: 8c3be76724b69b17b931726385084273925b504d
+  Expo: a3f0f69d893059490516e5e2e4f596264a9e1d44
   ExpoAsset: 9e5a7c9c0a9fb83ad5b2bb365141f2bd7f289b66
   ExpoFileSystem: a8e7fb1e958471764fb48d281cf9fa81a9e4d77c
   ExpoFont: dfb7c572372b610da45b41e3b436321fd6a97215

@@ -32,11 +32,11 @@ const {
 
 // AndroidManifest <application> 에 넣을 meta-data
 // (manifest는 prebuild 생성물이라 손으로 넣으면 매 빌드 때 지워짐 → plugin으로 주입)
-const ANDROID_PUBLISHER_UID = 'Publisher Uid 를 발급받으세요';
-const ANDROID_ADMOB_APP_ID = 'Google AdMob 에서 발급한 키값';
+const ANDROID_PUBLISHER_UID = 'MD1718693992449';
+const ANDROID_ADMOB_APP_ID = 'ca-app-pub-2626235926542867~4895401558';
 
 // iOS Info.plist GADApplicationIdentifier (plist도 prebuild 생성물이라 동일하게 plugin으로 주입)
-const IOS_ADMOB_APP_ID = 'Google AdMob 에서 발급한 키값';
+const IOS_ADMOB_APP_ID = 'ca-app-pub-8713069554470817~7929556981';
 const fs = require('fs');
 const path = require('path');
 
@@ -46,11 +46,11 @@ const CDN_SOURCE = 'https://cdn.cocoapods.org/';
 // [테스트용] AdMob 미디에이션 어댑터 의존성 — 실제 배포 시엔 앱 개발자가 가이드대로 추가
 const ANDROID_ADAPTER_DEPS = `
     // === [AdWhale 테스트용] 미디에이션 어댑터 (배포 시엔 가이드 보고 앱에서 직접 추가) ===
-    implementation "net.adwhale.sdk.cauly.adapter:cauly-sdk:3.5.44.0"
-    implementation "net.adwhale.sdk.admize.adapter:admize-sdk:1.0.8.2"
-    implementation "net.adwhale.sdk.adfit.adapter:adfit-sdk:3.21.17.1"
-    implementation "net.adwhale.sdk.admob.adapter:admob-sdk:24.3.0.4"
-    implementation "net.adwhale.sdk.levelplay.adapter:levelplay-sdk:8.12.0.1"
+    implementation "net.adwhale.sdk.cauly.adapter:cauly-sdk:3.5.44.1"
+    implementation "net.adwhale.sdk.admize.adapter:admize-sdk:1.0.8.3"
+    implementation "net.adwhale.sdk.adfit.adapter:adfit-sdk:3.21.17.2"
+    implementation "net.adwhale.sdk.admob.adapter:admob-sdk:24.3.0.5"
+    implementation "net.adwhale.sdk.levelplay.adapter:levelplay-sdk:8.12.0.2"
     implementation 'com.google.ads.mediation:applovin:13.3.1.1' // Admob-AppLovin
     implementation 'com.google.ads.mediation:fyber:8.3.7.0' // Admob-DT Exchange
     implementation 'com.google.ads.mediation:inmobi:10.8.3.1' // Admob-InMobi
