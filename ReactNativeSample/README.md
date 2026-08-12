@@ -23,12 +23,12 @@ AdWhale Mediation SDK 를 **Bare React Native (RN CLI)** 환경에서 사용하�
 | Event Callback   | O                 |
 
 ## Version
-샘플에 적용된 React Native SDK 버전은 ```2.7.500``` 입니다.
+샘플에 적용된 React Native SDK 버전은 ```2.7.600``` 입니다.
 
 | Native SDK    | React Native SDK |
 |---------------|------------------|
-| Android 2.7.5 | 2.7.500          |
-| iOS 1.0.8     | 2.7.500          |
+| Android 2.7.6 | 2.7.600          |
+| iOS 1.0.8     | 2.7.600          |
 
 - React Native: `0.83.1`
 
