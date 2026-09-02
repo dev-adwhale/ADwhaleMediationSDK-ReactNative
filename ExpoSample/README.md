@@ -25,12 +25,12 @@ AdWhale Mediation SDK 를 **Expo (Custom Dev Client / Bare Workflow)** 환경에
 | Event Callback   | O                 |
 
 ## Version
-샘플에 적용된 React Native SDK 버전은 ```2.7.600``` 입니다.
+샘플에 적용된 React Native SDK 버전은 ```2.7.700``` 입니다.
 
 | Native SDK    | React Native SDK |
 |---------------|------------------|
-| Android 2.7.6 | 2.7.600          |
-| iOS 1.0.8     | 2.7.600          |
+| Android 2.7.7 | 2.7.700          |
+| iOS 1.0.8     | 2.7.700          |
 
 - Expo SDK: `~54.0.30`
 - React Native: `0.81.5`
