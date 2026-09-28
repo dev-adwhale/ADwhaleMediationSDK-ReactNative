@@ -4,7 +4,7 @@
 // adwhale-sdk-react-native/example/ios/Podfile 에 있던 설정 중
 // expo-build-properties 로 표현할 수 없는 두 가지를 prebuild 시 자동 주입한다.
 //
-//   1) CocoaPods spec source 선언 (AdWhaleSDK 1.0.7 pod 을 찾기 위해 필수)
+//   1) CocoaPods spec source 선언 (AdWhaleSDK 1.0.9 pod 을 찾기 위해 필수)
 //        source 'https://cdn.cocoapods.org/'
 //        source 'https://github.com/dev-adwhale/AdWhaleSDK_iOS.git'
 //   2) 앱 타겟 OTHER_LDFLAGS 에 -ObjC (미디에이션 어댑터의 카테고리 로딩용)
