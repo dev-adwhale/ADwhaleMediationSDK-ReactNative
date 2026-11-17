@@ -23,12 +23,12 @@ AdWhale Mediation SDK 를 **Bare React Native (RN CLI)** 환경에서 사용하�
 | Event Callback   | O                 |
 
 ## Version
-샘플에 적용된 React Native SDK 버전은 ```2.7.801``` 입니다.
+샘플에 적용된 React Native SDK 버전은 ```2.7.1100``` 입니다.
 
-| Native SDK    | React Native SDK |
-|---------------|------------------|
-| Android 2.7.8 | 2.7.801          |
-| iOS 1.0.9     | 2.7.801          |
+| Native SDK     | React Native SDK |
+|----------------|------------------|
+| Android 2.7.11 | 2.7.1100         |
+| iOS 1.0.9      | 2.7.1100         |
 
 - React Native: `0.83.1`
 
@@ -153,6 +153,7 @@ npx react-native doctor
 
 - Node.js 18 이상
 - React Native 0.83
+- Kotlin Gradle 플러그인 2.2.0 이상 (AdMob 어댑터 25.4.0.0 사용 시 필수). `android/build.gradle`의 `kotlinVersion`과 `kotlin-gradle-plugin` classpath 버전을 함께 지정합니다
 - Android Studio / Xcode (네이티브 빌드용)
 - CocoaPods (iOS)
 
@@ -176,6 +177,7 @@ yarn start --reset-cache
 
 ### Android 빌드 오류
 - **`Invalid application ID` 크래시**: `AndroidManifest.xml` 의 AdMob `APPLICATION_ID` 가 유효한지 확인하세요.
+- **`Module was compiled with an incompatible version of Kotlin`**: Kotlin Gradle 플러그인이 2.2.0 미만입니다. `android/build.gradle`의 `kotlinVersion = "2.2.0"`과 `classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")`를 확인하세요. `kotlinVersion`만 바꾸면 적용되지 않습니다.
 - **R8 `OutOfMemoryError`**: `android/gradle.properties` 의 `org.gradle.jvmargs` 힙을 올리세요(기본 6g).
 - **클린 빌드**:
 ```bash

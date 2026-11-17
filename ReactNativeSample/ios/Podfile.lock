@@ -21,7 +21,7 @@ PODS:
   - AdWhaleSDK/Core (1.0.9):
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - GoogleMobileAdsMediationAppLovin (= 13.5.1.0)
-  - AdwhaleSdkReactNative (2.7.801):
+  - AdwhaleSdkReactNative (2.7.1100):
     - AdWhaleSDK (= 1.0.9)
     - boost
     - DoubleConversion
@@ -2942,7 +2942,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Ads-Global: fb1fa75ebbf100ab9ff216d81b71a05cf1a73675
   AdWhaleSDK: c667e4708a013f26ea9797a9c60b14fff5ba6d8d
-  AdwhaleSdkReactNative: 2a9da84430b41c5143f5da3b1f99ff8caf319a49
+  AdwhaleSdkReactNative: fbf4ced00c26ed59d843917355399e9bcd84ff15
   AppLovinSDK: 8d9af6c7617e4d35b38aa8393a3e9d161a74b230
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb

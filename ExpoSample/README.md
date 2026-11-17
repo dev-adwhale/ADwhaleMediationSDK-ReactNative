@@ -25,12 +25,12 @@ AdWhale Mediation SDK 를 **Expo (Custom Dev Client / Bare Workflow)** 환경에
 | Event Callback   | O                 |
 
 ## Version
-샘플에 적용된 React Native SDK 버전은 ```2.7.801``` 입니다.
+샘플에 적용된 React Native SDK 버전은 ```2.7.1100``` 입니다.
 
-| Native SDK    | React Native SDK |
-|---------------|------------------|
-| Android 2.7.8 | 2.7.801          |
-| iOS 1.0.9     | 2.7.801          |
+| Native SDK     | React Native SDK |
+|----------------|------------------|
+| Android 2.7.11 | 2.7.1100         |
+| iOS 1.0.9      | 2.7.1100         |
 
 - Expo SDK: `~54.0.30`
 - React Native: `0.81.5`
@@ -81,6 +81,8 @@ const IOS_ADMOB_APP_ID      = 'YOUR_IOS_ADMOB_APP_ID';        // 예: ca-app-pub
 #### (2) 빌드 속성 — `app.json` 의 `expo-build-properties`
 
 미디에이션 maven 저장소, SDK/Kotlin 버전, iOS 미디에이션 pod, R8 난독화 규칙이 들어 있습니다. 보통 그대로 두면 되며, 새 미디에이션 네트워크 추가 시 이곳을 수정합니다.
+
+`expo-build-properties`의 `kotlinVersion`만으로는 Kotlin Gradle 플러그인 버전이 바뀌지 않습니다. 그래서 `plugins/withKotlinGradlePlugin.js`가 `android/build.gradle`의 `kotlin-gradle-plugin` classpath에 2.2.0을 지정합니다(AdMob 어댑터 25.4.0.0 사용 시 필수). 두 값을 함께 맞춰 주세요.
 
 #### (3) iOS 서명(Development Team)
 
@@ -159,6 +161,7 @@ npx expo-doctor
 
 - Node.js 18 이상
 - Expo SDK 54 / React Native 0.81
+- Kotlin Gradle 플러그인 2.2.0 이상 (AdMob 어댑터 25.4.0.0 사용 시 필수, `plugins/withKotlinGradlePlugin.js`가 지정)
 - Android Studio / Xcode (네이티브 빌드용)
 - CocoaPods (iOS)
 
@@ -182,6 +185,7 @@ cd ios && pod deintegrate && pod install && cd ..
 
 ### Android 빌드 오류
 - **`Invalid application ID` 크래시**: `plugins/withAdwhaleAds.js` 의 `ANDROID_ADMOB_APP_ID` 가 유효한 AdMob App ID 인지 확인하세요.
+- **`Module was compiled with an incompatible version of Kotlin`**: Kotlin Gradle 플러그인이 2.2.0 미만입니다. `app.json`에 `withKotlinGradlePlugin`이 있는지 확인하고 `npx expo prebuild --clean`을 다시 실행하세요.
 - **R8 `OutOfMemoryError`**: plugin 이 `org.gradle.jvmargs` 힙을 상향(6g)합니다. 부족하면 더 올리세요.
 - **클린 빌드**:
 ```bash

@@ -21,7 +21,7 @@ PODS:
   - AdWhaleSDK/Core (1.0.9):
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - GoogleMobileAdsMediationAppLovin (= 13.5.1.0)
-  - AdwhaleSdkReactNative (2.7.801):
+  - AdwhaleSdkReactNative (2.7.1100):
     - AdWhaleSDK (= 1.0.9)
     - Google-Mobile-Ads-SDK (= 13.0.0)
     - hermes-engine
@@ -2455,7 +2455,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Ads-Global: fb1fa75ebbf100ab9ff216d81b71a05cf1a73675
   AdWhaleSDK: c667e4708a013f26ea9797a9c60b14fff5ba6d8d
-  AdwhaleSdkReactNative: 797a1f60a96181f19f1de8fdf0e1c1438d4bedc7
+  AdwhaleSdkReactNative: 8a467a464d94100ea536c8fae5da3109fcd01572
   AppLovinSDK: 8d9af6c7617e4d35b38aa8393a3e9d161a74b230
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
   Expo: a3f0f69d893059490516e5e2e4f596264a9e1d44
